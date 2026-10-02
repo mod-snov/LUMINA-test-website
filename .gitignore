@@ -1,0 +1,5 @@
+# Only publish the site itself: index.html + assets/
+/*
+!/index.html
+!/assets/
+!/.gitignore
