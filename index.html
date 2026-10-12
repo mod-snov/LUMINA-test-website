@@ -168,27 +168,27 @@
     .int-row { background: var(--raised); border-radius: 14px; box-shadow: var(--shadow-elevated); }
 
     /* Gallery */
-    .gallery { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0,1fr)); grid-template-rows: 430px 130px 248px; }
-    .g-a { grid-column: 1 / 3; grid-row: 1; }
-    .g-b { grid-column: 3; grid-row: 1 / 3; }
-    .g-c { grid-column: 1; grid-row: 2 / 4; }
-    .g-d { grid-column: 2; grid-row: 2 / 4; }
-    .g-e { grid-column: 3; grid-row: 3; }
-    .g-card { position: relative; overflow: hidden; border-radius: 14px; display: block; background: var(--panel); }
-    .g-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-out); }
-    .g-card:hover img { transform: scale(1.04); }
-    .g-card:active img { transform: scale(1.02); }
-    .g-card:focus-visible { outline: 2px solid #8CC7FF; outline-offset: 3px; }
-    .g-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,0) 60%); }
-    .g-card .treat { position: absolute; inset: 0; mix-blend-mode: multiply; background: rgba(18,22,60,.22); }
-    @media (max-width: 900px) {
-      .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 300px 260px 260px; }
-      .g-a { grid-column: 1 / 3; grid-row: 1; } .g-b { grid-column: 1; grid-row: 2; } .g-c { grid-column: 2; grid-row: 2; } .g-d { grid-column: 1; grid-row: 3; } .g-e { grid-column: 2; grid-row: 3; }
-    }
-    @media (max-width: 560px) {
-      .gallery { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: 300px; }
-      .g-a, .g-b, .g-c, .g-d, .g-e { grid-column: 1; grid-row: auto; }
-    }
+    .gal-wash { position: absolute; inset: 0 0 auto 0; height: 900px; pointer-events: none; opacity: .18; filter: blur(28px);
+      -webkit-mask-image: radial-gradient(60% 50% at 50% 50%, #000 30%, transparent 75%); mask-image: radial-gradient(60% 50% at 50% 50%, #000 30%, transparent 75%); }
+    .gal-wash img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+    /* Collage: large primary, smaller secondary overlapping its lower-left corner */
+    .collage { position: relative; padding-bottom: 14%; }
+    .c-card { position: relative; display: block; overflow: hidden; background: var(--panel); transition: transform .45s var(--ease-spring); }
+    .c-primary { width: 80%; margin-left: auto; aspect-ratio: 4 / 5; border-radius: 20px; box-shadow: var(--shadow-elevated); }
+    .c-secondary { position: absolute; left: 0; bottom: 0; width: 46%; aspect-ratio: 1; border-radius: 16px; box-shadow: 0 0 0 6px var(--deep, #070912), var(--shadow-floating); }
+    .c-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-out); }
+    .c-card:hover img { transform: scale(1.04); }
+    .c-card:hover { transform: translateY(-3px); }
+    .c-card:active { transform: translateY(0) scale(.99); }
+    .c-card:focus-visible { outline: 2px solid #8CC7FF; outline-offset: 4px; }
+    .c-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,0) 60%); }
+    .c-card .treat { position: absolute; inset: 0; mix-blend-mode: multiply; background: rgba(18,22,60,.22); }
+
+    /* Reveal: text then collage, once, when the section enters view */
+    .js-rv .rv { opacity: 0; transform: translateY(12px); transition: opacity .5s var(--ease-out), transform .5s var(--ease-out); transition-delay: var(--d, 0ms); }
+    .js-rv .rv-media { transform: translateY(24px); transition-duration: .6s; }
+    .js-rv.in .rv { opacity: 1; transform: none; }
 
     .icon-btn { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; transition: transform .3s var(--ease-spring), background-color .2s ease; }
     .icon-btn:hover { transform: scale(1.06); }
@@ -505,62 +505,33 @@
         radial-gradient(40% 30% at 70% 45%, rgba(88,80,210,.12), transparent 70%),
         radial-gradient(40% 30% at 30% 70%, rgba(46,155,255,.06), transparent 70%)"></div>
       <div class="grain absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-      <div class="relative mx-auto max-w-frame px-4 sm:px-5 pt-[82px] pb-[118px]">
-        <div class="text-center">
-          <p class="eyebrow">Gallery</p>
-          <h2 id="gal-h" class="mt-3 font-semibold text-[28px] sm:text-[32px]">See what our community finished.</h2>
-          <p class="mt-3 ui text-[14px] text-white/75">Renders graded, styled and delivered with Lumina.</p>
+      <!-- Wash: the featured render, blurred and masked from the top -->
+      <div class="gal-wash" aria-hidden="true"><img src="assets/render-dusk-office.jpg" alt="" /></div>
+
+      <div id="gal-hero" class="relative mx-auto max-w-frame px-4 sm:px-5 py-[82px] sm:py-[112px] grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] items-center gap-12 lg:gap-16">
+        <div class="rv flex flex-col items-start gap-5">
+          <h2 id="gal-h" class="font-semibold text-[30px] sm:text-[38px] md:text-[46px]">
+            See what our community<br />finished with Lumina.
+          </h2>
+          <p class="ui max-w-md text-[14px] sm:text-[16px] text-muted [text-wrap:balance]">Real projects, graded, styled and delivered in Lumina. Open any piece to see the layers behind the look.</p>
+          <div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a href="#gallery" class="btn btn-primary btn-lg">Go to gallery</a>
+            <a href="#community" class="lnk">Share your render <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+          </div>
         </div>
 
-        <div class="gallery mt-[76px]">
-          <a href="#gallery" class="g-card g-a">
-            <img src="assets/render-dusk-office.jpg" alt="Office building at dusk with a cool cinematic grade" style="filter: contrast(1.15) saturate(1.15) brightness(.85)" />
-            <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
-            <div class="absolute left-0 bottom-0 p-6 sm:p-9 max-w-[580px]">
-              <h3 class="text-[15px] font-semibold">Studio 15 at dusk</h3>
-              <p class="mt-2 ui text-[13px] text-white/90 leading-[1.55]">A cool blue-hour grade with a warm interior glow, built from four layers.</p>
-              <p class="mt-2 ui text-[13px] font-semibold">Artist name</p>
-            </div>
-          </a>
-          <a href="#gallery" class="g-card g-b">
-            <img src="assets/render-warehouse.jpg" alt="Warehouse corner with a soft morning look" style="object-position: 20% 50%; filter: brightness(1.05) saturate(.9) contrast(1.05)" />
-            <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
-            <div class="absolute left-0 bottom-0 p-6 sm:p-9">
-              <h3 class="text-[15px] font-semibold">Morning frontage</h3>
-              <p class="mt-2 ui text-[13px] text-white/90 leading-[1.55]">A soft daylight look with the sky pulled back using a sky mask.</p>
-              <p class="mt-2 ui text-[13px] font-semibold">Artist name</p>
-            </div>
-          </a>
-          <a href="#gallery" class="g-card g-c">
-            <img src="assets/render-dusk-office.jpg" alt="Office building converted to a black and white film look" style="object-position: 30% 50%; filter: grayscale(1) contrast(1.3) brightness(1.05)" />
-            <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
-            <div class="absolute left-0 bottom-0 p-6 sm:p-9">
-              <h3 class="text-[15px] font-semibold">Monochrome study</h3>
-              <p class="mt-2 ui text-[13px] text-white/90 leading-[1.55]">One click on a black-and-white film stock, then contrast tuned by hand.</p>
-              <p class="mt-2 ui text-[13px] font-semibold">Artist name</p>
-            </div>
-          </a>
-          <a href="#gallery" class="g-card g-d">
-            <img src="assets/render-warehouse.jpg" alt="Warehouse units with a moody night grade" style="object-position: 75% 50%; filter: brightness(.6) contrast(1.25) saturate(1.3) hue-rotate(-12deg)" />
-            <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
-            <div class="absolute left-0 bottom-0 p-6 sm:p-9">
-              <h3 class="text-[15px] font-semibold">Day for night</h3>
-              <p class="mt-2 ui text-[13px] text-white/90 leading-[1.55]">A daylight render turned to night with LightMix and a cool grade.</p>
-              <p class="mt-2 ui text-[13px] font-semibold">Artist name</p>
-            </div>
-          </a>
-          <a href="#gallery" class="g-card g-e">
-            <img src="assets/render-warehouse.jpg" alt="Warehouse street with a warm golden-hour look" style="object-position: 50% 60%; filter: sepia(.35) saturate(1.4) contrast(1.1)" />
-            <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
-            <div class="absolute left-0 bottom-0 p-6 sm:p-9">
-              <h3 class="text-[15px] font-semibold">Golden hour</h3>
-              <p class="mt-2 ui text-[13px] text-white/90 leading-[1.55]">A warm look pack applied across a five-shot series.</p>
-              <p class="mt-2 ui text-[13px] font-semibold">Artist name</p>
-            </div>
-          </a>
+        <div class="rv rv-media w-full" style="--d: 100ms">
+          <div class="collage">
+            <a href="#gallery" class="c-card c-primary">
+              <img src="assets/render-dusk-office.jpg" alt="Office building at dusk with a cool cinematic grade" style="filter: contrast(1.15) saturate(1.15) brightness(.9)" />
+              <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
+            </a>
+            <a href="#gallery" class="c-card c-secondary">
+              <img src="assets/render-warehouse.jpg" alt="Warehouse units turned to night with a cool grade" style="object-position: 75% 50%; filter: brightness(.7) contrast(1.2) saturate(1.3) hue-rotate(-12deg)" />
+              <div class="treat" aria-hidden="true"></div><div class="overlay" aria-hidden="true"></div>
+            </a>
+          </div>
         </div>
-
-        <div class="mt-[74px] text-center"><a href="#gallery" class="btn btn-primary !px-8">Go to gallery</a></div>
       </div>
 
       <!-- ============ COMMUNITY ============ -->
@@ -876,6 +847,16 @@
           if (p < 1) requestAnimationFrame(step);
         };
         setTimeout(() => requestAnimationFrame(step), 500);
+      }
+
+      // Gallery reveal
+      const gal = document.getElementById('gal-hero');
+      if (!reduce && 'IntersectionObserver' in window) {
+        gal.classList.add('js-rv');
+        const io = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) { gal.classList.add('in'); io.disconnect(); }
+        }, { rootMargin: '0px 0px -80px 0px' });
+        io.observe(gal);
       }
 
       // Mobile menu
