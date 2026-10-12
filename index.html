@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -17,24 +17,24 @@
       theme: {
         extend: {
           colors: {
-            // Lumina "Luminous Spectrum" palette (brand brief §11)
-            fg: '#F1F5F9',
-            muted: '#9AA5C0',
-            canvas: '#0A0C18',
-            deep: '#070912',
-            panel: '#12162C',
-            raised: '#171C38',
-            float: '#1E2446',
-            line: 'rgba(154,165,192,.16)',
+            // Lumina brand palette (Brand Identity Guidelines §05, Oct 2026)
+            fg: '#F1F5F9',        // Text
+            muted: '#9AA5C0',     // Text Muted
+            canvas: '#0A0C18',    // Canvas
+            deep: '#0A0C18',
+            panel: '#12162C',     // Panel
+            raised: '#171C38',    // Panel Alt
+            float: '#262C4A',     // Line, used as the top surface step
+            line: '#262C4A',      // Line
             card: '#12162C',
             soft: '#171C38',
             dark: '#0A0C18',
-            accent: { DEFAULT: '#2E9BFF', hover: '#5AB0FF', press: '#1C84E6', soft: 'rgba(46,155,255,.14)' },
+            accent: { DEFAULT: '#265787', hover: '#295E92', press: '#214B75', soft: 'rgba(38,87,135,.22)', text: '#5F8DBB' },
             layer: { 1: '#666973', 2: '#AAAEB5', 3: '#C1C6CC', 4: '#EFF4F8' },
-            spec: { coral: '#FF6B4A', amber: '#FFB23E', mint: '#6FE7C7', blue: '#2E9BFF' },
+            spec: { coral: '#e87d0d', blue: '#265787' },
           },
           fontFamily: {
-            display: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Archivo', 'ui-sans-serif', 'system-ui', 'sans-serif'],
             sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
           },
           maxWidth: { frame: '1154px' },
@@ -45,60 +45,66 @@
 
   <style>
     :root {
-      --canvas: #0A0C18; --panel: #12162C; --raised: #171C38; --float: #1E2446;
-      --fg: #F1F5F9; --muted: #9AA5C0; --line: rgba(154,165,192,.16);
-      --accent: #2E9BFF; --accent-hover: #5AB0FF; --accent-press: #1C84E6;
-      /* Signature spectrum: large formats only, never load-bearing */
-      --spectrum: linear-gradient(90deg, #FF6B4A, #FFB23E 34%, #6FE7C7 67%, #2E9BFF);
+      /* Brand palette: 60 canvas · 25 panels · 10 text · 5 accent */
+      --canvas: #0A0C18; --panel: #12162C; --raised: #171C38; --float: #262C4A;
+      --fg: #F1F5F9; --muted: #9AA5C0; --line: #262C4A;
+      --accent: #265787; --accent-hover: #295E92; /* +8% brightness */ --accent-press: #214B75;
+      /* Lumina Blue, lightened for small text: Lumina Blue itself is only 2.6:1 on Canvas, this tint is 5.6:1 */
+      --accent-text: #5F8DBB;
+      --coral: #e87d0d;
+      /* Signature spectrum: always warm → cool, large formats only, once per layout */
+      --spectrum: linear-gradient(90deg, #e87d0d, #F1F5F9 45%, #9AA5C0 72%, #265787);
       --ease-spring: cubic-bezier(.22, 1.2, .36, 1);
       --ease-out: cubic-bezier(.16, 1, .3, 1);
-      /* Depth: canvas → raised → floating. Top-edge light + deep indigo falloff */
-      --shadow-elevated: inset 0 1px 0 rgba(241,245,249,.05), 0 1px 2px rgba(3,4,12,.5), 0 18px 40px -24px rgba(3,4,12,.9);
-      --shadow-floating: inset 0 1px 0 rgba(241,245,249,.07), 0 2px 6px rgba(3,4,12,.5), 0 28px 60px -24px rgba(3,4,12,.95), 0 30px 80px -40px rgba(46,155,255,.35);
+      /* Depth comes from surface steps (Canvas → Panel → Panel Alt) and a 1px Line, never drop shadows */
+      --shadow-elevated: inset 0 0 0 1px var(--line);
+      --shadow-floating: inset 0 0 0 1px var(--line), 0 24px 48px -28px rgba(3,4,12,.9);
     }
     html { background: var(--canvas); }
-    body { background: var(--canvas); color: var(--fg); font-family: Inter, ui-sans-serif, system-ui, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-    h1, h2, h3, h4 { font-family: Poppins, ui-sans-serif, system-ui, sans-serif; }
+    body { background: var(--canvas); color: var(--fg); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    /* Archivo leads (display, headlines), Inter supports (UI, body) */
+    h1, h2, h3, h4 { font-family: Archivo, ui-sans-serif, system-ui, sans-serif; }
     .ui { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-    h1, h2 { letter-spacing: -0.03em; line-height: 1.12; }
-    h3, h4 { letter-spacing: -0.015em; line-height: 1.3; }
-    ::selection { background: rgba(46,155,255,.35); color: #fff; }
+    h1 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+    h2 { font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; }
+    h3, h4 { font-weight: 600; letter-spacing: 0; line-height: 1.3; }
+    ::selection { background: rgba(38,87,135,.6); color: #F1F5F9; }
 
-    .eyebrow { font-family: Inter, sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0; color: var(--accent); }
+    /* Label: Inter SemiBold 12 · caps · +12% */
+    .eyebrow { font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); }
 
-    /* Buttons */
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; height: 36px; padding: 0 28px; border-radius: 999px; font-family: Inter, sans-serif; font-weight: 600; font-size: 13px; line-height: 1; white-space: nowrap; border: 1.5px solid transparent;
-      transition: transform .35s var(--ease-spring), background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease; }
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(1px) scale(.97); }
-    .btn-lg { height: 44px; padding: 0 38px; font-size: 14px; }
-    .btn-primary { background: var(--accent); color: var(--canvas); box-shadow: 0 10px 24px -12px rgba(46,155,255,.8), inset 0 1px 0 rgba(255,255,255,.25); }
+    /* Buttons: height 40 · radius 8 · Inter SemiBold 14 · hover +8% brightness, never glow */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; height: 40px; padding: 0 20px; border-radius: 8px; font-family: Inter, sans-serif; font-weight: 600; font-size: 14px; line-height: 1; white-space: nowrap; border: 1.5px solid transparent;
+      transition: transform .35s var(--ease-spring), background-color .2s ease, border-color .2s ease, color .2s ease; }
+    .btn:active { transform: scale(.97); }
+    .btn-lg { padding: 0 28px; }
+    .btn-primary { background: var(--accent); color: var(--fg); }
     .btn-primary:hover { background: var(--accent-hover); }
     .btn-primary:active { background: var(--accent-press); }
-    .btn-outline, .btn-outline-light { border-color: rgba(241,245,249,.5); color: var(--fg); background: transparent; }
-    .btn-outline:hover, .btn-outline-light:hover { background: var(--fg); border-color: var(--fg); color: var(--canvas); }
-    .btn-outline:active, .btn-outline-light:active { background: #D3DAE6; border-color: #D3DAE6; }
-    :is(.btn, .lnk, .tab, .tile, .icon-btn, .nav-link, .chip-btn):focus-visible { outline: 2px solid #8CC7FF; outline-offset: 3px; }
+    .btn-outline, .btn-outline-light { border-color: rgba(241,245,249,.85); color: var(--fg); background: transparent; }
+    .btn-outline:hover, .btn-outline-light:hover { background: rgba(241,245,249,.08); }
+    .btn-outline:active, .btn-outline-light:active { background: rgba(241,245,249,.14); }
+    .btn:disabled, .btn[aria-disabled="true"] { background: var(--raised); border-color: transparent; color: var(--muted); cursor: not-allowed; transform: none; }
+    :is(.btn, .lnk, .tab, .tile, .icon-btn, .nav-link, .chip-btn):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    .nav-link { display: inline-flex; align-items: center; gap: 6px; font-family: Inter, sans-serif; font-weight: 500; font-size: 13.5px; color: var(--fg); border-radius: 4px; transition: color .2s ease; }
-    .nav-link svg { transition: transform .3s var(--ease-spring); }
-    .nav-link:hover { color: var(--accent-hover); }
-    .nav-link:hover svg { transform: translateY(1px); }
-    .nav-link:active { color: var(--accent-press); }
+    .nav-link { display: inline-flex; align-items: center; gap: 6px; font-family: Inter, sans-serif; font-weight: 500; font-size: 14px; color: var(--muted); border-radius: 4px; transition: color .2s ease; }
+    .nav-link:hover { color: var(--fg); }
+    .nav-link:active { color: var(--accent); }
 
-    .lnk { font-family: Inter, sans-serif; font-weight: 500; font-size: 14px; color: var(--accent); border-radius: 3px; display: inline-flex; align-items: center; gap: 4px; transition: color .2s ease; }
+    /* Ghost link: Text with a Lumina Blue bar underneath (blue text alone is too dim to read on Canvas) */
+    .lnk { font-family: Inter, sans-serif; font-weight: 600; font-size: 14px; color: var(--fg); border-radius: 3px; display: inline-flex; align-items: center; gap: 4px; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; transition: color .2s ease; }
     .lnk svg { transition: transform .3s var(--ease-spring); }
-    .lnk:hover { color: var(--accent-hover); }
+    .lnk:hover { color: #fff; }
     .lnk:hover svg { transform: translateX(3px); }
-    .lnk:active { color: var(--accent-press); }
+    .lnk:active { color: var(--muted); }
     .flink { color: var(--muted); font-size: 13px; font-family: Inter, sans-serif; border-radius: 3px; transition: color .2s ease; }
     .flink:hover { color: var(--fg); }
     .flink:active { color: var(--accent); }
-    .flink:focus-visible { outline: 2px solid #8CC7FF; outline-offset: 2px; }
+    .flink:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    /* Grain */
+    /* Grain: film grain ≤ 4% */
     .grain { position: relative; }
-    .grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
+    .grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .04; mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
     /* Hero compare */
@@ -107,39 +113,40 @@
     .hero .raw { filter: saturate(.45) contrast(.8) brightness(1.05); }
     .hero .finished { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--split, 50%)); }
     .hero .finished img { filter: contrast(1.15) saturate(1.25) brightness(.92); }
-    .hero .finished::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(46,120,255,.22), transparent 45%, rgba(255,140,60,.28)); mix-blend-mode: soft-light; }
+    .hero .finished::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(38,87,135,.4), transparent 45%, rgba(232,125,13,.3)); mix-blend-mode: soft-light; }
     .hero .shade { position: absolute; inset: 0; background:
         radial-gradient(70% 70% at 50% 50%, rgba(10,12,24,.6), rgba(10,12,24,.2) 70%),
         linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,0) 55%); mix-blend-mode: multiply; pointer-events: none; }
     .hero::before { content: ""; position: absolute; inset: auto 0 0 0; height: 90px; z-index: 1; background: linear-gradient(to top, var(--canvas), transparent); pointer-events: none; }
-    .spectrum-bar { height: 4px; border-radius: 2px; background: var(--spectrum); box-shadow: 0 0 28px rgba(111,231,199,.25); }
+    /* Baseline of light: the one spectrum band on the page */
+    .spectrum-bar { height: 4px; border-radius: 2px; background: var(--spectrum); }
     .split-line { position: absolute; top: 0; bottom: 0; left: var(--split, 50%); width: 2px; margin-left: -1px; background: rgba(241,245,249,.85); pointer-events: none; z-index: 2; }
     .split-knob { position: absolute; bottom: 34px; left: 50%; width: 38px; height: 38px; margin-left: -19px; border-radius: 999px; background: var(--fg); display: grid; place-items: center; box-shadow: 0 6px 20px -4px rgba(3,4,12,.7); transition: transform .3s var(--ease-spring); }
     .hero:hover .split-knob { transform: scale(1.08); }
     .hero:active .split-knob { transform: scale(.94); }
     .split-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: ew-resize; z-index: 3; }
-    .split-range:focus-visible ~ .split-line .split-knob { outline: 2px solid #8CC7FF; outline-offset: 3px; }
-    .hero-tag { position: absolute; z-index: 2; bottom: 40px; padding: 4px 12px; border-radius: 999px; font: 500 12px/1.4 Inter, sans-serif; color: var(--fg); background: rgba(10,12,24,.6); backdrop-filter: blur(6px); pointer-events: none; }
+    .split-range:focus-visible ~ .split-line .split-knob { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .hero-tag { position: absolute; z-index: 2; bottom: 40px; padding: 5px 12px; border-radius: 999px; font: 600 12px/1.2 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--fg); background: rgba(10,12,24,.7); backdrop-filter: blur(6px); pointer-events: none; }
 
     /* Stats */
-    .stat-num { font-family: Poppins, sans-serif; font-weight: 600; font-size: 44px; letter-spacing: -0.03em; line-height: 1; color: var(--fg); }
-    .stat-num span { color: var(--accent); }
+    .stat-num { font-family: Archivo, sans-serif; font-weight: 700; font-size: 48px; letter-spacing: -0.03em; line-height: 1; color: var(--fg); }
+    .stat-num span { color: var(--accent-text); }
     @media (max-width: 640px) { .stat-num { font-size: 30px; } }
 
     /* Tabs */
-    .tabs { display: inline-flex; padding: 5px; border-radius: 999px; background: var(--raised); box-shadow: var(--shadow-elevated); }
-    @media (max-width: 640px) { .tab { padding: 0 14px !important; height: 40px !important; } }
-    .tab { height: 44px; padding: 0 22px; border-radius: 999px; font: 500 13px Inter, sans-serif; color: var(--muted); transition: background-color .25s ease, color .25s ease, transform .3s var(--ease-spring); white-space: nowrap; }
-    .tab:hover { background: var(--float); color: var(--fg); }
+    .tabs { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--panel); box-shadow: var(--shadow-elevated); }
+    @media (max-width: 640px) { .tab { padding: 0 14px !important; } }
+    .tab { height: 40px; padding: 0 22px; border-radius: 999px; font: 500 14px Inter, sans-serif; color: var(--muted); transition: background-color .25s ease, color .25s ease, transform .3s var(--ease-spring); white-space: nowrap; }
+    .tab:hover { background: var(--raised); color: var(--fg); }
     .tab:active { transform: scale(.97); }
-    .tab[aria-selected="true"] { background: var(--fg); color: var(--canvas); font-weight: 600; }
+    .tab[aria-selected="true"] { background: var(--accent); color: var(--fg); font-weight: 600; }
 
-    /* Surfaces */
-    .card { background: var(--raised); border-radius: 20px; box-shadow: var(--shadow-elevated); }
-    .img-card { position: relative; overflow: hidden; border-radius: 20px; box-shadow: var(--shadow-elevated); background: var(--canvas); }
+    /* Surfaces. Cards: radius 12 · 1px Line border · no drop shadows */
+    .card { background: var(--panel); border-radius: 12px; box-shadow: var(--shadow-elevated); }
+    .img-card { position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--shadow-elevated); background: var(--canvas); }
     .img-card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-out); }
     .img-card:hover > img { transform: scale(1.03); }
-    .img-card .tint { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(46,155,255,.18), rgba(10,12,24,.35)); mix-blend-mode: multiply; pointer-events: none; }
+    .img-card .tint { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(38,87,135,.3), rgba(10,12,24,.35)); mix-blend-mode: multiply; pointer-events: none; }
     .img-card .fade-b { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,0) 60%); pointer-events: none; }
     .img-card .fade-t { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0) 55%); pointer-events: none; }
 
@@ -148,24 +155,28 @@
       transition: transform .35s var(--ease-spring), border-color .2s ease, background-color .2s ease; }
     .feat-chip:hover { transform: translateY(-3px); border-color: var(--fg); }
     .feat-chip:active { transform: scale(.96); }
-    .feat-chip[aria-pressed="true"] { border-color: var(--accent); background: rgba(46,155,255,.22); color: #D6EBFF; }
-    .feat-chip:focus-visible { outline: 2px solid #8CC7FF; outline-offset: 3px; }
+    .feat-chip[aria-pressed="true"] { border-color: var(--accent); background: rgba(38,87,135,.55); color: var(--fg); }
+    .feat-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    .pill { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font: 500 11px Inter, sans-serif; color: var(--fg); background: rgba(241,245,249,.16); backdrop-filter: blur(4px); }
+    /* Tags: pills, radius full, caps */
+    .pill { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font: 600 12px/1 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--fg); background: rgba(23,28,56,.75); border: 1px solid var(--line); backdrop-filter: blur(4px); }
 
-    /* Module marks: one flat accent for every module */
-    .mod { width: 40px; height: 40px; border-radius: 8px; display: grid; place-items: center; flex: none; color: var(--accent); background: var(--canvas); border: 1px solid rgba(46,155,255,.4); box-shadow: inset 0 0 14px rgba(46,155,255,.12); }
-    .mod svg { stroke: var(--accent); }
-    .mod [fill="#fff"] { fill: var(--accent); }
+    /* Module marks: line icons, Text Muted by default, Lumina Blue when active */
+    .mod { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; flex: none; color: var(--muted); background: var(--raised); border: 1px solid var(--line); }
+    .mod svg { stroke: var(--muted); }
+    .mod [fill="#fff"] { fill: var(--muted); }
+    .mod.is-active { background: var(--accent); border-color: var(--accent); }
+    .mod.is-active svg { stroke: var(--fg); }
+    .mod.is-active [fill="#fff"] { fill: var(--fg); }
     .mod-sm { width: 32px; height: 32px; }
 
     /* Integrations tiles */
-    .tile { width: 64px; height: 64px; border-radius: 10px; background: var(--raised); display: grid; place-items: center; font: 600 11px/1.15 Inter, sans-serif; color: var(--fg); text-align: center; border: 1.5px solid transparent; box-shadow: var(--shadow-elevated);
+    .tile { width: 64px; height: 64px; border-radius: 12px; background: var(--raised); display: grid; place-items: center; font: 600 12px/1.15 Inter, sans-serif; color: var(--fg); text-align: center; border: 1px solid var(--line);
       transition: transform .3s var(--ease-spring), background-color .2s ease, border-color .2s ease; }
     .tile:hover { background: var(--float); transform: translateY(-2px); }
     .tile:active { transform: scale(.95); }
-    .tile[aria-pressed="true"] { background: var(--float); border-color: var(--accent); box-shadow: var(--shadow-floating); }
-    .int-row { background: var(--raised); border-radius: 14px; box-shadow: var(--shadow-elevated); }
+    .tile[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+    .int-row { background: var(--raised); border-radius: 12px; box-shadow: var(--shadow-elevated); }
 
     /* Gallery */
     .gal-wash { position: absolute; inset: 0 0 auto 0; height: 900px; pointer-events: none; opacity: .18; filter: blur(28px);
@@ -175,15 +186,15 @@
     /* Collage: large primary, smaller secondary overlapping its lower-left corner */
     .collage { position: relative; padding-bottom: 14%; }
     .c-card { position: relative; display: block; overflow: hidden; background: var(--panel); transition: transform .45s var(--ease-spring); }
-    .c-primary { width: 80%; margin-left: auto; aspect-ratio: 4 / 5; border-radius: 20px; box-shadow: var(--shadow-elevated); }
-    .c-secondary { position: absolute; left: 0; bottom: 0; width: 46%; aspect-ratio: 1; border-radius: 16px; box-shadow: 0 0 0 6px var(--deep, #070912), var(--shadow-floating); }
+    .c-primary { width: 80%; margin-left: auto; aspect-ratio: 4 / 5; border-radius: 12px; box-shadow: var(--shadow-elevated); }
+    .c-secondary { position: absolute; left: 0; bottom: 0; width: 46%; aspect-ratio: 1; border-radius: 12px; box-shadow: 0 0 0 6px var(--canvas), var(--shadow-floating); }
     .c-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-out); }
     .c-card:hover img { transform: scale(1.04); }
     .c-card:hover { transform: translateY(-3px); }
     .c-card:active { transform: translateY(0) scale(.99); }
-    .c-card:focus-visible { outline: 2px solid #8CC7FF; outline-offset: 4px; }
+    .c-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
     .c-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,0) 60%); }
-    .c-card .treat { position: absolute; inset: 0; mix-blend-mode: multiply; background: rgba(18,22,60,.22); }
+    .c-card .treat { position: absolute; inset: 0; mix-blend-mode: multiply; background: rgba(38,87,135,.22); }
 
     /* Reveal: text then collage, once, when the section enters view */
     .js-rv .rv { opacity: 0; transform: translateY(12px); transition: opacity .5s var(--ease-out), transform .5s var(--ease-out); transition-delay: var(--d, 0ms); }
@@ -194,21 +205,21 @@
     .icon-btn:hover { transform: scale(1.06); }
     .icon-btn:active { transform: scale(.94); }
 
-    /* Releases glow */
-    .glow-bar { height: 2px; background: linear-gradient(90deg, transparent, #2E9BFF 20%, #8CC7FF 50%, #2E9BFF 80%, transparent); box-shadow: 0 0 24px 2px rgba(46,155,255,.8); }
-    .glow-cone { background: radial-gradient(50% 100% at 50% 0%, rgba(46,155,255,.3), rgba(46,155,255,0) 70%); }
-    .play { width: 70px; height: 70px; border-radius: 999px; display: grid; place-items: center; background: rgba(46,155,255,.88); transition: transform .35s var(--ease-spring), background-color .2s ease; }
-    .play svg { fill: var(--canvas); }
-    a:hover .play, button:hover .play { transform: scale(1.08); background: var(--accent-hover); }
+    /* Releases: a stepped bar unit over a soft Lumina Blue glow (no spectrum here, it is used once in the hero) */
+    .glow-bar { height: 4px; border-radius: 2px; background: var(--accent); }
+    .glow-cone { background: radial-gradient(50% 100% at 50% 0%, rgba(38,87,135,.35), rgba(38,87,135,0) 70%); }
+    .play { width: 64px; height: 64px; border-radius: 999px; display: grid; place-items: center; background: var(--accent); transition: transform .35s var(--ease-spring), background-color .2s ease; }
+    .play svg { fill: var(--fg); }
+    a:hover .play, button:hover .play { transform: scale(1.06); background: var(--accent-hover); }
     a:active .play, button:active .play { transform: scale(.95); }
 
-    /* Form */
-    .field { width: 100%; height: 42px; border-radius: 6px; background: var(--canvas); border: 1px solid var(--line); padding: 0 14px; font: 400 14px Inter, sans-serif; color: var(--fg); transition: border-color .2s ease, box-shadow .2s ease; }
-    .field:hover { border-color: rgba(154,165,192,.4); }
-    .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(46,155,255,.25); }
+    /* Form: inputs 40px on Canvas · focus ring 2px Lumina Blue */
+    .field { width: 100%; height: 40px; border-radius: 8px; background: var(--canvas); border: 1px solid var(--line); padding: 0 14px; font: 400 14px Inter, sans-serif; color: var(--fg); transition: border-color .2s ease, box-shadow .2s ease; }
+    .field:hover { border-color: #3A4266; }
+    .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
     .field option { background: var(--panel); color: var(--fg); }
     .check { width: 16px; height: 16px; accent-color: var(--accent); }
-    .check:focus-visible { outline: 2px solid #8CC7FF; outline-offset: 2px; }
+    .check:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     /* Promo bar */
     .promo { transition: transform .5s var(--ease-out), opacity .3s ease; }
@@ -226,50 +237,38 @@
 
   <!-- ============ HEADER ============ -->
   <header class="relative z-40 bg-canvas border-b border-line">
-    <div class="flex items-stretch h-[72px] lg:h-[90px]">
-      <a href="#top" class="shrink-0 bg-panel grid place-items-center w-[112px] lg:w-[140px] transition-opacity duration-200 hover:opacity-90 active:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:-outline-offset-4" aria-label="Lumina home">
-        <img src="assets/lumina-logo.png" alt="Lumina" width="104" height="21" class="w-[82px] lg:w-[104px] h-auto" />
+    <!-- Navigation: mark + wordmark left · 4 links max · one primary button -->
+    <div class="mx-auto max-w-frame px-4 sm:px-5 h-[72px] flex items-center justify-between gap-6">
+      <a href="#top" class="shrink-0 rounded-[4px] transition-opacity duration-200 hover:opacity-90 active:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4" aria-label="Lumina home">
+        <img src="assets/lumina-logo.png" alt="Lumina" width="112" height="23" class="w-[96px] lg:w-[112px] h-auto" />
       </a>
-      <div class="flex-1 flex flex-col justify-center lg:justify-between px-4 lg:px-[10px] lg:pt-[12px] lg:pb-[8px]">
-        <div class="hidden lg:flex justify-end items-center gap-5 ui text-[13px] text-fg">
-          <a href="#contact" class="flink">Contact us</a>
-          <a href="#pricing" class="flink inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.5 11h11L21 8H6.5"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>Cart</a>
-          <button type="button" class="flink inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>EN</button>
-          <a href="#signin" class="flink inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Sign in</a>
-        </div>
-        <div class="flex items-center justify-end lg:justify-between gap-6">
-          <nav aria-label="Primary" class="hidden lg:flex items-center gap-[38px] mx-auto pl-[180px]">
-            <a href="#products" class="nav-link">Features <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="m1 1 4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
-            <a href="#products" class="nav-link">Who it's for <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="m1 1 4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
-            <a href="#community" class="nav-link">Learning &amp; Community <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="m1 1 4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
-            <a href="#integrations" class="nav-link">Support <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="m1 1 4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
-            <a href="#pricing" class="nav-link">Pricing</a>
-            <button type="button" class="nav-link" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
-          </nav>
-          <div class="flex items-center gap-2">
-            <a href="#pricing" class="btn btn-outline !h-[34px] !px-6">Try</a>
-            <a href="#pricing" class="btn btn-primary !h-[34px] !px-6">Buy <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="m1 1 4.5 4.5L10 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a>
-            <button type="button" id="menu-btn" class="icon-btn lg:hidden hover:bg-raised active:bg-float" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-            </button>
-          </div>
+      <div class="flex items-center gap-8 lg:gap-10">
+        <nav aria-label="Primary" class="hidden lg:flex items-center gap-8">
+          <a href="#products" class="nav-link">Features</a>
+          <a href="#looks" class="nav-link">Look Packs</a>
+          <a href="#community" class="nav-link">Docs</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a href="#pricing" class="btn btn-primary">Get Lumina</a>
+          <button type="button" id="menu-btn" class="icon-btn lg:hidden hover:bg-raised active:bg-float" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
         </div>
       </div>
     </div>
     <nav id="mobile-nav" aria-label="Mobile" class="hidden lg:hidden border-t border-line px-4 py-4 space-y-3">
       <a href="#products" class="nav-link block py-1">Features</a>
-      <a href="#products" class="nav-link block py-1">Who it's for</a>
-      <a href="#community" class="nav-link block py-1">Learning &amp; Community</a>
-      <a href="#integrations" class="nav-link block py-1">Support</a>
+      <a href="#looks" class="nav-link block py-1">Look Packs</a>
+      <a href="#community" class="nav-link block py-1">Docs</a>
       <a href="#pricing" class="nav-link block py-1">Pricing</a>
-      <a href="#signin" class="nav-link block py-1">Sign in</a>
     </nav>
 
     <!-- Announcement bar -->
-    <div class="bg-panel text-fg">
-      <div class="mx-auto max-w-frame px-4 py-3 lg:h-[60px] lg:py-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-center">
-        <p class="ui text-[14px] lg:text-[15px]">Lumina 1.2 adds Cryptomatte masks. Grade any material or object on its own.</p>
-        <a href="#releases" class="btn btn-outline-light !h-[36px] !px-7">See what's new</a>
+    <div class="bg-panel text-fg border-t border-line">
+      <div class="mx-auto max-w-frame px-4 py-3 lg:h-[56px] lg:py-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
+        <p class="ui text-[14px] text-muted"><span class="pill mr-2 align-middle">Roadmap</span>Coming next: Blend Modes and LUT import.</p>
+        <a href="#community" class="lnk">See the roadmap</a>
       </div>
     </div>
   </header>
@@ -285,21 +284,21 @@
         <div class="split-knob"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4 2 8l4 4M10 4l4 4-4 4" stroke="#0A0C18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
       <span class="hero-tag left-4 md:left-6">Raw render</span>
-      <span class="hero-tag right-4 md:right-6">Finished in Lumina</span>
+      <span class="hero-tag right-4 md:right-6">Lumina finish</span>
 
       <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-5 pb-6 pointer-events-none">
-        <h1 class="text-fg font-semibold text-[36px] sm:text-[52px]">We hide the nodes, not Blender.</h1>
-        <div class="spectrum-bar mt-5 w-[min(300px,60%)]" aria-hidden="true"></div>
-        <p class="mt-5 text-fg/90 ui text-[14px] sm:text-[16px] max-w-[620px] leading-[1.6]">Lumina is the finishing room inside Blender. Take a raw render to a finished, client-ready image, live in the viewport.</p>
-        <a href="#pricing" class="btn btn-primary btn-lg mt-8 pointer-events-auto !px-10">See plans &amp; pricing</a>
+        <h1 class="text-fg text-[36px] sm:text-[48px] max-w-[760px]">The finishing room inside Blender.</h1>
+        <div class="spectrum-bar mt-6 w-[min(300px,60%)]" aria-hidden="true"></div>
+        <p class="mt-5 text-fg ui text-[16px] sm:text-[18px] max-w-[620px]">From render to final image, without the node graph.</p>
+        <a href="#pricing" class="btn btn-primary btn-lg mt-8 pointer-events-auto">Get Lumina</a>
       </div>
     </section>
 
     <!-- ============ STATS ============ -->
     <section class="bg-canvas" aria-labelledby="stats-h">
       <div class="mx-auto max-w-frame px-5 pt-[76px] text-center">
-        <h2 id="stats-h" class="font-semibold text-[30px] sm:text-[40px] text-fg">The last mile of every render, in one panel.</h2>
-        <p class="mt-4 mx-auto max-w-[720px] ui text-[16px] sm:text-[18px] text-muted leading-[1.55]">Lumina sits in Blender's sidebar and turns the compositor into a layer stack artists already know how to use.</p>
+        <h2 id="stats-h" class="text-[30px] sm:text-[48px] font-bold tracking-[-0.02em] leading-[1.1] text-fg">We hide the nodes, not Blender.</h2>
+        <p class="mt-4 mx-auto max-w-[720px] ui text-[16px] sm:text-[18px] text-muted">Lumina turns Blender's powerful but technical compositor into a layer workflow artists can read: grade, stylize, mask, review and deliver, live in the 3D viewport.</p>
       </div>
       <dl class="mx-auto max-w-[900px] px-5 mt-14 grid grid-cols-3">
         <div class="text-center px-2"><dt class="sr-only">Nodes to wire</dt><dd class="stat-num">0<span></span></dd><p class="mt-3 text-[13px] sm:text-sm text-muted ui">nodes to wire by hand</p></div>
@@ -317,7 +316,6 @@
           <li class="font-bold text-[22px] tracking-[0.04em]">ACES</li>
           <li class="font-medium text-[21px] italic">AgX</li>
           <li class="font-semibold text-[19px] tracking-[-0.01em]">OpenEXR</li>
-          <li class="font-semibold text-[18px]">Cryptomatte</li>
         </ul>
       </div>
     </section>
@@ -334,34 +332,34 @@
         </div>
 
         <div class="text-center mt-14">
-          <h2 id="show-h" class="font-semibold text-[28px] sm:text-[32px] leading-[1.15]">Finishing tools for<br /><span id="tab-line" class="text-muted">architectural visualization.</span></h2>
-          <p id="tab-sub" class="mt-4 ui text-[14px] text-muted">Shape the mood. Match the pitch.</p>
+          <h2 id="show-h" class="text-[28px] sm:text-[32px]">Finishing tools for<br /><span id="tab-line" class="text-muted">architectural visualization.</span></h2>
+          <p id="tab-sub" class="mt-4 ui text-[16px] text-muted">Shape the mood. Match the pitch.</p>
         </div>
 
         <!-- Lead card -->
         <article class="card mt-8 overflow-hidden grid lg:grid-cols-[400px_1fr] min-h-[467px]">
           <div class="p-8 sm:p-[60px] sm:pr-6 flex flex-col">
             <div class="flex items-center gap-2.5">
-              <span class="mod mod-grade" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span>
-              <span class="leading-none"><span class="block ui text-[10px] font-semibold text-muted">Lumina</span><span class="block ui text-[19px] font-semibold tracking-[-0.01em]">Grade</span></span>
+              <span class="mod mod-grade is-active" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span>
+              <span class="leading-none"><span class="block ui text-[12px] font-medium text-muted">Lumina</span><span class="block font-display text-[20px] font-semibold">Grade</span></span>
             </div>
-            <h3 id="lead-title" class="mt-12 text-[24px] font-semibold">Grade as you render.</h3>
-            <p id="lead-text" class="mt-4 ui text-[14px] leading-[1.6] text-muted max-w-[300px]">Open the Lumina panel next to your viewport and start grading the moment the render lands. Exposure, curves, color balance and masks, stacked as layers you can reorder or switch off at any time.</p>
+            <h3 id="lead-title" class="mt-12 text-[22px]">Grade your render live, right in the viewport.</h3>
+            <p id="lead-text" class="mt-4 ui text-[16px] text-muted max-w-[300px]">Open the Lumina panel next to your viewport and start grading the moment the render lands. Exposure, curves, color balance and masks, stacked as layers you can reorder or switch off at any time.</p>
             <div class="mt-auto pt-10 flex gap-2">
-              <a href="#features" class="btn btn-outline !px-7">Learn more</a>
-              <a href="#pricing" class="btn btn-primary !px-7">Buy now</a>
+              <a href="#features" class="btn btn-outline">Learn more</a>
+              <a href="#pricing" class="btn btn-primary">Get Lumina</a>
             </div>
           </div>
           <div class="relative min-h-[300px] lg:min-h-0">
             <img id="lead-img" src="assets/render-dusk-office.jpg" alt="Dusk render of an office facade, graded in Lumina" class="absolute inset-0 w-full h-full object-cover" style="filter: contrast(1.12) saturate(1.2) brightness(.95)" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
-            <div class="absolute inset-0 mix-blend-multiply bg-[rgba(30,40,90,.15)]" aria-hidden="true"></div>
-            <div class="absolute left-0 top-0 bottom-0 w-[42%] bg-gradient-to-r from-raised via-raised/60 to-transparent hidden lg:block" aria-hidden="true"></div>
+            <div class="absolute inset-0 mix-blend-multiply bg-[rgba(38,87,135,.18)]" aria-hidden="true"></div>
+            <div class="absolute left-0 top-0 bottom-0 w-[42%] bg-gradient-to-r from-panel via-panel/60 to-transparent hidden lg:block" aria-hidden="true"></div>
             <div class="absolute left-4 right-4 bottom-6 sm:left-auto sm:right-[150px] flex flex-wrap justify-center gap-2.5" role="group" aria-label="Feature highlights">
               <button type="button" class="feat-chip" aria-pressed="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/><circle cx="12" cy="10" r="1.6"/></svg>Live grading</button>
-              <button type="button" class="feat-chip" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg>Film looks</button>
+              <button type="button" class="feat-chip" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg>Film Looks</button>
               <button type="button" class="feat-chip" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /><path d="M12 4a8 8 0 0 1 0 16" fill="currentColor" fill-opacity=".35"/></svg>Masks</button>
-              <button type="button" class="feat-chip" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h12"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></svg>LightMix</button>
+              <button type="button" class="feat-chip" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>Lens effects</button>
               <button type="button" class="feat-chip" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></svg>Client delivery</button>
             </div>
           </div>
@@ -373,7 +371,7 @@
             <img src="assets/render-warehouse.jpg" alt="Exterior render of a row of warehouse units" style="object-position: 50% 70%" />
             <div class="tint" aria-hidden="true"></div><div class="fade-t" aria-hidden="true"></div>
             <div class="relative p-6 text-center">
-              <h3 id="card-a" class="text-white text-[20px] font-semibold">All you need as an arch-viz artist</h3>
+              <h3 id="card-a" class="text-fg text-[20px] font-semibold">All you need as an arch-viz artist</h3>
               <div class="mt-3 flex flex-wrap justify-center gap-1.5" id="card-a-pills"><span class="pill">Interiors</span><span class="pill">Exteriors</span><span class="pill">Dusk</span><span class="pill">Aerial</span><span class="pill">Stills</span></div>
             </div>
           </a>
@@ -385,73 +383,73 @@
             <div class="absolute -right-4 bottom-5 space-y-1.5 opacity-80 flex flex-col items-end" aria-hidden="true">
               <div class="h-3 w-6 rounded-[3px] bg-accent/25"></div><div class="h-3 w-12 rounded-[3px] bg-accent/45"></div><div class="h-3 w-16 rounded-[3px] bg-accent/65"></div><div class="h-3 w-24 rounded-[3px] bg-accent/90"></div>
             </div>
-            <p class="ui font-bold text-[40px] leading-none text-accent">0</p>
-            <p class="mt-2 ui font-semibold text-[20px]">nodes to wire</p>
-            <p class="mt-6 ui text-[13px] text-muted">Lumina builds the compositor graph for you</p>
+            <p class="font-display font-bold text-[48px] tracking-[-0.03em] leading-none text-fg">0</p>
+            <p class="mt-2 font-display font-semibold text-[22px]">nodes to wire</p>
+            <p class="mt-6 ui text-[13px] text-muted">Lumina builds the nodes for you</p>
           </div>
           <a href="#releases" class="img-card block h-[232px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2">
             <img src="assets/render-dusk-office.jpg" alt="Dusk office render with the sky isolated by a mask" style="object-position: 70% 30%; filter: saturate(1.2) hue-rotate(-8deg)" />
             <div class="tint" aria-hidden="true"></div><div class="fade-b" aria-hidden="true"></div>
-            <span class="absolute right-6 top-[44%] inline-flex items-center gap-2 h-8 px-3 rounded-md bg-[rgba(10,12,24,.82)] border border-accent text-white ui text-[11px] font-medium"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#2E9BFF"/></svg>Sky mask</span>
-            <h3 class="absolute left-0 right-0 bottom-9 text-center text-white text-[20px] font-semibold px-4">Masks at your fingertips</h3>
+            <span class="absolute right-6 top-[44%] inline-flex items-center gap-2 h-8 px-3 rounded-[8px] bg-[rgba(10,12,24,.85)] border border-accent text-fg ui text-[12px] font-medium"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA5C0" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#9AA5C0"/></svg>Sky mask</span>
+            <h3 class="absolute left-0 right-0 bottom-9 text-center text-fg text-[22px] px-4">Masks at your fingertips</h3>
           </a>
         </div>
 
         <p class="mt-6 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2 ui text-[14px] text-muted">
           Lumina runs on
-          <span class="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-raised font-semibold text-fg shadow-[inset_0_1px_0_rgba(241,245,249,.06)]"><svg width="14" height="14" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="3" width="6" height="6" rx="1.2" fill="#2E9BFF" fill-opacity=".45"/><rect x="5" y="11" width="11" height="5.5" rx="1.2" fill="#2E9BFF" fill-opacity=".65"/><rect x="5" y="18.5" width="16" height="5.5" rx="1.2" fill="#2E9BFF" fill-opacity=".85"/><rect x="5" y="26" width="23" height="5" rx="1.2" fill="#2E9BFF"/></svg>Blender's own compositor</span>
+          <span class="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-raised border border-line font-semibold text-fg"><svg width="14" height="14" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="3" width="6" height="6" rx="1.2" fill="#666973"/><rect x="5" y="11" width="11" height="5.5" rx="1.2" fill="#AAAEB5"/><rect x="5" y="18.5" width="16" height="5.5" rx="1.2" fill="#C1C6CC"/><rect x="5" y="26" width="23" height="5" rx="1.2" fill="#EFF4F8"/></svg>Blender's own compositor and color management</span>
           so nothing leaves your scene
         </p>
 
         <!-- Two module cards -->
         <div class="mt-16 grid md:grid-cols-2 gap-5">
-          <article class="card overflow-hidden flex flex-col">
+          <article id="looks" class="card overflow-hidden flex flex-col scroll-mt-4">
             <div class="relative aspect-[567/322] overflow-hidden">
-              <img src="assets/render-warehouse.jpg" alt="Warehouse render with a warm film look applied" class="absolute inset-0 w-full h-full object-cover" style="filter: sepia(.25) saturate(1.25) contrast(1.08)" />
+              <img src="assets/render-warehouse.jpg" alt="Warehouse render with a warm film Look applied" class="absolute inset-0 w-full h-full object-cover" style="filter: sepia(.25) saturate(1.25) contrast(1.08)" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50" aria-hidden="true"></div>
-              <div class="absolute inset-0 mix-blend-multiply bg-[rgba(255,140,80,.12)]" aria-hidden="true"></div>
-              <span class="absolute right-2 bottom-2 text-[10px] ui text-white/90">Placeholder render</span>
+              <div class="absolute inset-0 mix-blend-multiply bg-[rgba(232,125,13,.12)]" aria-hidden="true"></div>
+              <span class="absolute right-3 bottom-2 text-[12px] ui text-fg/90">Placeholder render</span>
             </div>
-            <div class="p-8 sm:px-[60px] sm:pt-[38px] sm:pb-[50px] flex-1 flex flex-col">
+            <div class="p-6 sm:px-[48px] sm:pt-[36px] sm:pb-[44px] flex-1 flex flex-col">
               <div class="flex items-center gap-2.5">
                 <span class="mod mod-looks" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span>
-                <span class="leading-none"><span class="block ui text-[10px] font-semibold text-muted">Lumina</span><span class="block ui text-[19px] font-semibold">Looks</span></span>
+                <span class="leading-none"><span class="block ui text-[12px] font-medium text-muted">Lumina</span><span class="block font-display text-[20px] font-semibold">Looks</span></span>
               </div>
-              <h3 class="mt-5 text-[24px] font-semibold">Film looks in one click.</h3>
-              <p class="mt-2 ui text-[14px] leading-[1.6] text-muted">Start from a film stock or a saved look, then tune it like any other layer. Save your own as look packs and use them across every shot in a project.</p>
-              <div class="mt-auto pt-10 flex gap-2"><a href="#features" class="btn btn-primary !px-7">Learn more</a><a href="#pricing" class="btn btn-outline !px-7">Buy now</a></div>
+              <h3 class="mt-5 text-[22px]">Build a Look once. Reuse it across every shot.</h3>
+              <p class="mt-2 ui text-[16px] text-muted">Start from a film stock or a built-in Natural, Warm or Cool Look, then tune it like any other layer. Save your own and bundle them into Look Packs.</p>
+              <div class="mt-auto pt-10 flex flex-wrap gap-2"><a href="#features" class="btn btn-primary">Learn more</a><a href="#pricing" class="btn btn-outline">Get Lumina</a></div>
             </div>
           </article>
           <article class="card overflow-hidden flex flex-col">
             <div class="relative aspect-[567/322] overflow-hidden">
-              <img src="assets/render-dusk-office.jpg" alt="Dusk render with the interior lights rebalanced" class="absolute inset-0 w-full h-full object-cover" style="filter: brightness(.85) contrast(1.2) saturate(1.3) hue-rotate(6deg)" />
+              <img src="assets/render-dusk-office.jpg" alt="Dusk render with bloom on the interior lights" class="absolute inset-0 w-full h-full object-cover" style="filter: brightness(.85) contrast(1.2) saturate(1.3) hue-rotate(6deg)" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50" aria-hidden="true"></div>
-              <div class="absolute inset-0 mix-blend-multiply bg-[rgba(30,50,120,.18)]" aria-hidden="true"></div>
-              <span class="absolute right-2 bottom-2 text-[10px] ui text-white/90">Placeholder render</span>
+              <div class="absolute inset-0 mix-blend-multiply bg-[rgba(38,87,135,.22)]" aria-hidden="true"></div>
+              <span class="absolute right-3 bottom-2 text-[12px] ui text-fg/90">Placeholder render</span>
             </div>
-            <div class="p-8 sm:px-[60px] sm:pt-[38px] sm:pb-[50px] flex-1 flex flex-col">
+            <div class="p-6 sm:px-[48px] sm:pt-[36px] sm:pb-[44px] flex-1 flex flex-col">
               <div class="flex items-center gap-2.5">
-                <span class="mod mod-deliver" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h12"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></svg></span>
-                <span class="leading-none"><span class="block ui text-[10px] font-semibold text-muted">Lumina</span><span class="block ui text-[19px] font-semibold">LightMix</span></span>
+                <span class="mod mod-effects" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
+                <span class="leading-none"><span class="block ui text-[12px] font-medium text-muted">Lumina</span><span class="block font-display text-[20px] font-semibold">Effects</span></span>
               </div>
-              <h3 class="mt-5 text-[24px] font-semibold">Relight after the render.</h3>
-              <p class="mt-2 ui text-[14px] leading-[1.6] text-muted">Turn the sun down, warm up the interiors or kill a stray lamp without rendering again. Then match the whole image to a client's reference photo.</p>
-              <div class="mt-auto pt-10 flex gap-2"><a href="#features" class="btn btn-primary !px-7">Learn more</a><a href="#pricing" class="btn btn-outline !px-7">Buy now</a></div>
+              <h3 class="mt-5 text-[22px]">Lens and artistic effects, as layers.</h3>
+              <p class="mt-2 ui text-[16px] text-muted">Add glow, bloom and lens effects, or pick from a large library of stylized effects. Each one sits in the stack, so you can tune it, reorder it or switch it off.</p>
+              <div class="mt-auto pt-10 flex flex-wrap gap-2"><a href="#features" class="btn btn-primary">Learn more</a><a href="#pricing" class="btn btn-outline">Get Lumina</a></div>
             </div>
           </article>
         </div>
 
         <!-- Module tray -->
         <div class="mt-[74px] flex flex-col items-center gap-8">
-          <div class="p-2.5 rounded-[18px] bg-raised" style="box-shadow: var(--shadow-floating)">
-            <div class="flex gap-4 px-7 py-5 rounded-[12px] bg-panel">
-              <span class="mod mod-grade" title="Grade"><span class="sr-only">Grade</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span>
+          <div class="p-2.5 rounded-[12px] bg-raised" style="box-shadow: var(--shadow-floating)">
+            <div class="flex gap-4 px-7 py-5 rounded-[12px] bg-panel border border-line">
+              <span class="mod mod-grade is-active" title="Grade"><span class="sr-only">Grade</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span>
               <span class="mod mod-looks" title="Looks"><span class="sr-only">Looks</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span>
               <span class="mod mod-masks" title="Masks"><span class="sr-only">Masks</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#fff"/></svg></span>
-              <span class="mod mod-deliver" title="LightMix"><span class="sr-only">LightMix</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h12"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></svg></span>
+              <span class="mod mod-effects" title="Effects"><span class="sr-only">Effects</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
             </div>
           </div>
-          <a href="#features" id="features" class="btn btn-primary btn-lg !h-[46px] !px-10">Explore all features</a>
+          <a href="#features" id="features" class="btn btn-primary btn-lg !px-10">Explore all features</a>
         </div>
       </div>
     </section>
@@ -459,10 +457,10 @@
     <!-- ============ INTEGRATIONS ============ -->
     <section id="integrations" class="bg-canvas scroll-mt-4" aria-labelledby="int-h">
       <div class="mx-auto max-w-[956px] px-4 py-[74px]">
-        <div class="rounded-[22px] bg-panel border border-line px-5 sm:px-10 pt-[62px] pb-[62px]">
+        <div class="rounded-[12px] bg-panel border border-line px-5 sm:px-10 pt-[62px] pb-[62px]">
           <div class="text-center">
             <p class="eyebrow">Integrations</p>
-            <h2 id="int-h" class="mt-3 font-semibold text-[22px] sm:text-[24px] tracking-[-0.02em]">See what's available for your Blender setup.</h2>
+            <h2 id="int-h" class="mt-3 text-[26px] sm:text-[32px]">See what's available for your Blender setup.</h2>
             <p class="mt-2 ui text-[14px] text-muted">Lumina supports current Blender releases, both render engines and every desktop platform.</p>
           </div>
 
@@ -482,16 +480,16 @@
           <p class="mt-12 mx-auto max-w-[464px] ui text-[14px] font-semibold text-fg"><span id="setup-name">Blender 4.2 LTS</span> support</p>
           <ul class="mt-4 mx-auto max-w-[280px] space-y-5">
             <li class="int-row h-[78px] px-6 flex items-center justify-between gap-4">
-              <span class="flex items-center gap-2"><span class="mod mod-sm mod-grade" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span><span class="leading-none"><span class="block ui text-[8px] font-semibold text-muted">Lumina</span><span class="block ui text-[15px] font-semibold">Grade</span></span></span>
-              <a href="#features" class="btn btn-outline !h-[32px] !px-3 !text-[11px]">Learn more</a>
+              <span class="flex items-center gap-2"><span class="mod mod-sm mod-grade" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span><span class="leading-none"><span class="block ui text-[12px] font-semibold text-muted">Lumina</span><span class="block ui text-[15px] font-semibold">Grade</span></span></span>
+              <a href="#features" class="btn btn-outline !px-3 !text-[12px]">Learn more</a>
             </li>
             <li class="int-row h-[78px] px-6 flex items-center justify-between gap-4">
-              <span class="flex items-center gap-2"><span class="mod mod-sm mod-looks" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span><span class="leading-none"><span class="block ui text-[8px] font-semibold text-muted">Lumina</span><span class="block ui text-[15px] font-semibold">Looks</span></span></span>
-              <a href="#features" class="btn btn-outline !h-[32px] !px-3 !text-[11px]">Learn more</a>
+              <span class="flex items-center gap-2"><span class="mod mod-sm mod-looks" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span><span class="leading-none"><span class="block ui text-[12px] font-semibold text-muted">Lumina</span><span class="block ui text-[15px] font-semibold">Looks</span></span></span>
+              <a href="#features" class="btn btn-outline !px-3 !text-[12px]">Learn more</a>
             </li>
             <li class="int-row h-[78px] px-6 flex items-center justify-between gap-4">
-              <span class="flex items-center gap-2"><span class="mod mod-sm mod-masks" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#fff"/></svg></span><span class="leading-none"><span class="block ui text-[8px] font-semibold text-muted">Lumina</span><span class="block ui text-[15px] font-semibold">Masks</span></span></span>
-              <a href="#features" class="btn btn-outline !h-[32px] !px-3 !text-[11px]">Learn more</a>
+              <span class="flex items-center gap-2"><span class="mod mod-sm mod-masks" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#fff"/></svg></span><span class="leading-none"><span class="block ui text-[12px] font-semibold text-muted">Lumina</span><span class="block ui text-[15px] font-semibold">Masks</span></span></span>
+              <a href="#features" class="btn btn-outline !px-3 !text-[12px]">Learn more</a>
             </li>
           </ul>
         </div>
@@ -499,21 +497,21 @@
     </section>
 
     <!-- ============ GALLERY ============ -->
-    <section id="gallery" class="on-dark relative bg-deep text-white overflow-hidden scroll-mt-4" aria-labelledby="gal-h">
+    <section id="gallery" class="on-dark relative bg-deep text-fg overflow-hidden scroll-mt-4" aria-labelledby="gal-h">
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true" style="background:
-        radial-gradient(28% 22% at 50% 30%, rgba(46,155,255,.12), transparent 70%),
-        radial-gradient(40% 30% at 70% 45%, rgba(88,80,210,.12), transparent 70%),
-        radial-gradient(40% 30% at 30% 70%, rgba(46,155,255,.06), transparent 70%)"></div>
+        radial-gradient(28% 22% at 50% 30%, rgba(38,87,135,.12), transparent 70%),
+        radial-gradient(40% 30% at 70% 45%, rgba(38,87,135,.12), transparent 70%),
+        radial-gradient(40% 30% at 30% 70%, rgba(38,87,135,.06), transparent 70%)"></div>
       <div class="grain absolute inset-0 pointer-events-none" aria-hidden="true"></div>
       <!-- Wash: the featured render, blurred and masked from the top -->
       <div class="gal-wash" aria-hidden="true"><img src="assets/render-dusk-office.jpg" alt="" /></div>
 
       <div id="gal-hero" class="relative mx-auto max-w-frame px-4 sm:px-5 py-[82px] sm:py-[112px] grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] items-center gap-12 lg:gap-16">
         <div class="rv flex flex-col items-start gap-5">
-          <h2 id="gal-h" class="font-semibold text-[30px] sm:text-[38px] md:text-[46px]">
+          <h2 id="gal-h" class="font-bold tracking-[-0.02em] leading-[1.1] text-[32px] sm:text-[40px] md:text-[48px]">
             See what our community<br />finished with Lumina.
           </h2>
-          <p class="ui max-w-md text-[14px] sm:text-[16px] text-muted [text-wrap:balance]">Real projects, graded, styled and delivered in Lumina. Open any piece to see the layers behind the look.</p>
+          <p class="ui max-w-md text-[14px] sm:text-[16px] text-muted [text-wrap:balance]">Real projects, graded, styled and delivered in Lumina. Open any piece to see the layers behind the Look.</p>
           <div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
             <a href="#gallery" class="btn btn-primary btn-lg">Go to gallery</a>
             <a href="#community" class="lnk">Share your render <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
@@ -538,39 +536,39 @@
       <div id="community" class="relative mx-auto max-w-frame px-4 sm:px-5 pt-[56px] pb-[76px] scroll-mt-4">
         <div class="text-center">
           <p class="eyebrow">Share. Learn. Finish.</p>
-          <h2 class="mt-3 font-semibold text-[22px] sm:text-[24px] tracking-[-0.02em]">Join a global community of Blender artists in the Lumina Community</h2>
-          <p class="mt-3 mx-auto max-w-[960px] ui text-[14px] text-white/75">The Lumina Community is where artists share looks and finished work, help each other get unstuck, and tell us what to build next.</p>
+          <h2 class="mt-3 text-[26px] sm:text-[32px]">Join a global community of Blender artists in the Lumina Community</h2>
+          <p class="mt-3 mx-auto max-w-[960px] ui text-[14px] text-muted">The Lumina Community is where artists share Looks and finished work, help each other get unstuck, and tell us what to build next.</p>
         </div>
 
         <div class="mt-[72px] grid sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-12">
           <article>
-            <span class="w-10 h-10 rounded-full bg-accent-soft border border-accent/40 grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5" fill="#2E9BFF" fill-opacity=".25"/></svg></span>
-            <h3 class="mt-5 text-[14px] font-semibold">Share the before and after.</h3>
-            <p class="mt-3 ui text-[14px] leading-[1.6] text-white/85">Post a raw render next to the finished one, get feedback on the grade, and see how other artists approach the same kind of shot.</p>
+            <span class="w-10 h-10 rounded-full bg-raised border border-line grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9AA5C0" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5" fill="#9AA5C0" fill-opacity=".25"/></svg></span>
+            <h3 class="mt-5 text-[18px]">Share the before and after.</h3>
+            <p class="mt-3 ui text-[14px] leading-[1.6] text-muted">Post a raw render next to the finished one, get feedback on the grade, and see how other artists approach the same kind of shot.</p>
             <a href="#gallery" class="lnk mt-4">See all projects <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
           <article>
-            <span class="w-10 h-10 rounded-full bg-accent-soft border border-accent/40 grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
-            <h3 class="mt-5 text-[14px] font-semibold">Learn the craft.</h3>
-            <p class="mt-3 ui text-[14px] leading-[1.6] text-white/85">Short tutorials and live sessions on grading, looks and masking, taught by artists who finish client work every week.</p>
+            <span class="w-10 h-10 rounded-full bg-raised border border-line grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9AA5C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+            <h3 class="mt-5 text-[18px]">Learn the craft.</h3>
+            <p class="mt-3 ui text-[14px] leading-[1.6] text-muted">Short tutorials and live sessions on grading, looks and masking, taught by artists who finish client work every week.</p>
             <a href="#masterclass" class="lnk mt-4">Learn more <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
           <article>
-            <span class="w-10 h-10 rounded-full bg-accent-soft border border-accent/40 grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span>
-            <h3 class="mt-5 text-[14px] font-semibold">Swap look packs.</h3>
-            <p class="mt-3 ui text-[14px] leading-[1.6] text-white/85">Publish the looks you build and pick up the ones other artists have made. Every look loads straight into your layer stack.</p>
-            <a href="#gallery" class="lnk mt-4">Browse looks <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <span class="w-10 h-10 rounded-full bg-raised border border-line grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9AA5C0" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span>
+            <h3 class="mt-5 text-[18px]">Swap Look Packs.</h3>
+            <p class="mt-3 ui text-[14px] leading-[1.6] text-muted">Publish the Looks you build and pick up the ones other artists have made. Every Look loads straight into your layer stack.</p>
+            <a href="#gallery" class="lnk mt-4">Browse Look Packs <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
           <article>
-            <span class="w-10 h-10 rounded-full bg-accent-soft border border-accent/40 grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" stroke-width="2" stroke-linecap="round"><path d="M4 20h16M7 16V9M12 16V5M17 16v-4"/></svg></span>
-            <h3 class="mt-5 text-[14px] font-semibold">Shape the roadmap.</h3>
-            <p class="mt-3 ui text-[14px] leading-[1.6] text-white/85">Request features, vote on what ships next, and test new tools before they are released.</p>
+            <span class="w-10 h-10 rounded-full bg-raised border border-line grid place-items-center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9AA5C0" stroke-width="2" stroke-linecap="round"><path d="M4 20h16M7 16V9M12 16V5M17 16v-4"/></svg></span>
+            <h3 class="mt-5 text-[18px]">Shape the roadmap.</h3>
+            <p class="mt-3 ui text-[14px] leading-[1.6] text-muted">Request features, vote on what ships next, and test new tools before they are released.</p>
             <a href="#releases" class="lnk mt-4">See the roadmap <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
         </div>
 
         <div class="mt-10 text-center"><a href="#community" class="btn btn-outline-light btn-lg !px-10">Join the community</a></div>
-        <p class="mt-12 text-center ui text-[13px] text-white/90">✓ Included with every Lumina license.</p>
+        <p class="mt-12 text-center ui text-[13px] text-muted">✓ Included with every Lumina license.</p>
       </div>
     </section>
 
@@ -579,19 +577,19 @@
       <div class="mx-auto max-w-[960px] px-4 sm:px-5 pt-[78px] pb-[74px]">
         <div class="text-center">
           <p class="eyebrow">What artists say about Lumina</p>
-          <h2 id="tst-h" class="mt-3 font-semibold text-[22px] sm:text-[24px] tracking-[-0.02em]">We help Blender artists ship finished images.</h2>
+          <h2 id="tst-h" class="mt-3 text-[26px] sm:text-[32px]">We help Blender artists ship finished images.</h2>
         </div>
 
         <div class="mt-10 grid md:grid-cols-2 gap-2.5">
           <!-- Quote carousel -->
-          <div class="on-dark relative rounded-[16px] bg-raised text-white min-h-[460px] md:row-span-2 flex flex-col items-center justify-center text-center px-10 sm:px-20 py-12" aria-roledescription="carousel" aria-label="Artist quotes">
+          <div class="on-dark relative rounded-[12px] bg-raised text-fg min-h-[460px] md:row-span-2 flex flex-col items-center justify-center text-center px-10 sm:px-20 py-12" aria-roledescription="carousel" aria-label="Artist quotes">
             <button type="button" class="icon-btn absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 active:bg-white/10" id="q-prev" aria-label="Previous quote"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></button>
             <button type="button" class="icon-btn absolute right-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 active:bg-white/10" id="q-next" aria-label="Next quote"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></button>
             <div aria-live="polite">
               <blockquote id="q-text" class="ui font-semibold text-[15px] leading-[1.4]">“I used to send renders out half-finished because I didn't want to open the compositor. Now the grade happens in the same window I lit the scene in.”</blockquote>
               <img id="q-img" src="https://placehold.co/100x100/2b2d3a/F1F5F9?text=A" alt="" width="100" height="100" class="mt-14 mx-auto w-[100px] h-[100px] rounded-full object-cover" />
               <p id="q-name" class="mt-8 ui text-[13px] font-semibold">Artist name</p>
-              <p id="q-role" class="ui text-[13px] text-white/75">Freelance arch-viz artist</p>
+              <p id="q-role" class="ui text-[13px] text-muted">Freelance arch-viz artist</p>
             </div>
             <div class="mt-6 flex items-center gap-2" aria-hidden="true">
               <span class="q-dot w-2 h-2 rounded-full bg-white"></span><span class="q-dot w-2 h-2 rounded-full bg-white/30"></span><span class="q-dot w-2 h-2 rounded-full bg-white/30"></span>
@@ -599,32 +597,31 @@
           </div>
 
           <!-- Compatibility badges -->
-          <div class="relative rounded-[16px] overflow-hidden min-h-[250px] grid place-items-center p-8 text-white" style="background: radial-gradient(80% 90% at 0% 0%, rgba(88,80,210,.32), transparent 60%), radial-gradient(70% 90% at 100% 100%, rgba(46,155,255,.32), transparent 60%), #12162C;">
+          <div class="relative rounded-[12px] overflow-hidden min-h-[250px] grid place-items-center p-8 text-fg" style="background: radial-gradient(80% 90% at 0% 0%, rgba(38,87,135,.32), transparent 60%), radial-gradient(70% 90% at 100% 100%, rgba(38,87,135,.32), transparent 60%), #12162C;">
             <div class="grain absolute inset-0" aria-hidden="true"></div>
             <div class="relative grid grid-cols-2 gap-4 w-full max-w-[380px]">
               <div class="rounded-[8px] border border-white/15 bg-white/5 p-4 text-center">
-                <p class="ui text-[11px] text-white/70">Tested on</p>
+                <p class="ui text-[12px] text-muted">Tested on</p>
                 <p class="mt-1 ui text-[15px] font-semibold">Blender 4.2 LTS</p>
-                <p class="mt-2 inline-flex items-center gap-1 ui text-[11px] text-accent"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.5l4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Every release</p>
+                <p class="mt-2 inline-flex items-center gap-1 ui text-[12px] text-muted"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.5l4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Every release</p>
               </div>
               <div class="rounded-[8px] border border-white/15 bg-white/5 p-4 text-center">
-                <p class="ui text-[11px] text-white/70">Tested on</p>
+                <p class="ui text-[12px] text-muted">Tested on</p>
                 <p class="mt-1 ui text-[15px] font-semibold">Blender 4.5 LTS</p>
-                <p class="mt-2 inline-flex items-center gap-1 ui text-[11px] text-accent"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.5l4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Every release</p>
+                <p class="mt-2 inline-flex items-center gap-1 ui text-[12px] text-muted"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.5l4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Every release</p>
               </div>
             </div>
           </div>
 
           <!-- Open standards -->
-          <div class="relative rounded-[16px] overflow-hidden min-h-[335px] flex flex-col items-center justify-center p-8 text-white" style="background: radial-gradient(70% 80% at 100% 0%, rgba(46,155,255,.24), transparent 60%), radial-gradient(80% 90% at 0% 100%, rgba(88,80,210,.32), transparent 60%), #12162C;">
+          <div class="relative rounded-[12px] overflow-hidden min-h-[335px] flex flex-col items-center justify-center p-8 text-fg" style="background: radial-gradient(70% 80% at 100% 0%, rgba(38,87,135,.24), transparent 60%), radial-gradient(80% 90% at 0% 100%, rgba(38,87,135,.32), transparent 60%), #12162C;">
             <div class="grain absolute inset-0" aria-hidden="true"></div>
             <h3 class="relative text-center text-[15px] font-semibold max-w-[260px]">Built on the color standards studios already trust.</h3>
-            <ul class="relative mt-10 flex flex-wrap justify-center gap-x-7 gap-y-4 ui text-white/90">
+            <ul class="relative mt-10 flex flex-wrap justify-center gap-x-7 gap-y-4 ui text-muted">
               <li class="font-semibold text-[15px]">OpenColorIO</li>
               <li class="font-bold text-[16px] tracking-[0.04em]">ACES</li>
               <li class="italic text-[16px]">AgX</li>
               <li class="font-semibold text-[15px]">OpenEXR</li>
-              <li class="font-semibold text-[14px]">Cryptomatte</li>
             </ul>
           </div>
         </div>
@@ -632,77 +629,75 @@
     </section>
 
     <!-- ============ RELEASES ============ -->
-    <section id="releases" class="on-dark relative bg-deep text-white overflow-hidden scroll-mt-4" aria-labelledby="rel-h">
+    <section id="releases" class="on-dark relative bg-deep text-fg overflow-hidden scroll-mt-4" aria-labelledby="rel-h">
       <div class="absolute left-1/2 -translate-x-1/2 top-[88px] w-[min(392px,70%)]" aria-hidden="true">
         <div class="glow-bar"></div>
         <div class="glow-cone h-[200px] -mx-[50%]"></div>
       </div>
-      <div class="absolute inset-x-0 top-0 h-[300px] pointer-events-none" aria-hidden="true" style="background: radial-gradient(45% 100% at 50% 0%, rgba(30,70,140,.35), transparent 70%)"></div>
+      <div class="absolute inset-x-0 top-0 h-[300px] pointer-events-none" aria-hidden="true" style="background: radial-gradient(45% 100% at 50% 0%, rgba(38,87,135,.35), transparent 70%)"></div>
       <div class="relative mx-auto max-w-frame px-4 sm:px-5 pt-[150px] pb-[76px]">
         <div class="text-center">
-          <p class="eyebrow">See what's new</p>
-          <h2 id="rel-h" class="mt-3 font-semibold text-[28px] sm:text-[32px]">Check out the latest Lumina releases.</h2>
+          <p class="eyebrow">Watch</p>
+          <h2 id="rel-h" class="mt-3 text-[28px] sm:text-[32px]">See Lumina finish a render.</h2>
         </div>
 
         <div class="mt-10 grid lg:grid-cols-[760px_1fr] gap-8 lg:gap-[34px] items-start">
-          <button type="button" class="relative block w-full aspect-[760/432] rounded-[14px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8CC7FF] focus-visible:outline-offset-3" aria-label="Play the Lumina 1.2 overview video">
+          <button type="button" class="relative block w-full aspect-[760/432] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#265787] focus-visible:outline-offset-3" aria-label="Play the Lumina Looks overview video">
             <img src="assets/render-dusk-office.jpg" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]" style="filter: contrast(1.15) saturate(1.2) brightness(.9)" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
-            <div class="absolute inset-0 mix-blend-multiply bg-[rgba(20,40,110,.25)]" aria-hidden="true"></div>
+            <div class="absolute inset-0 mix-blend-multiply bg-[rgba(38,87,135,.25)]" aria-hidden="true"></div>
             <span class="play absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></span>
           </button>
           <div class="pt-2">
-            <h3 class="text-[24px] font-semibold leading-[1.2]">Masks, by material.</h3>
-            <p class="mt-5 ui text-[16px] font-semibold text-accent">Cryptomatte masks are now part of Lumina.</p>
-            <p class="mt-4 ui text-[13.5px] leading-[1.55] text-white/90">Click a material, an object or the sky in the viewport and Lumina builds the mask for you. Grade the glazing without touching the facade, warm up one room, or pull a client's product forward. Every mask stays a layer you can adjust later.</p>
-            <p class="mt-8 ui text-[13.5px] leading-[1.55] font-semibold">Lumina 1.2 is a free update for every license.</p>
-            <a href="#releases" class="lnk mt-8 !text-[13px] font-semibold">Read the release notes <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-            <div class="mt-6"><a href="#pricing" class="btn btn-outline-light !h-[34px] !px-7">Learn more</a></div>
+            <h3 class="text-[22px]">Same render. Three Looks. Zero nodes.</h3>
+            <p class="mt-5 ui text-[16px] font-semibold text-fg">Natural, Warm and Cool Looks are built in.</p>
+            <p class="mt-4 ui text-[14px] leading-[1.6] text-muted">Start from a built-in Look, then adjust it like any other layer stack: toggle, reorder, group and save. Lumina builds the nodes for you, on Blender's own compositor.</p>
+            <a href="#looks" class="lnk mt-8">See how Looks work <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <div class="mt-6"><a href="#pricing" class="btn btn-outline-light">Get Lumina</a></div>
           </div>
         </div>
 
         <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
           <article>
-            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8CC7FF] focus-visible:outline-offset-2" aria-label="Watch: live grading in the viewport">
+            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#265787] focus-visible:outline-offset-2" aria-label="Watch: live grading in the viewport">
               <img src="assets/render-warehouse.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
               <span class="play absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></span>
             </a>
             <span class="mod mod-grade mt-7" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span>
-            <h3 class="mt-5 text-[15px] font-semibold leading-[1.45]">Live grading, now on the GPU.</h3>
-            <p class="mt-4 ui text-[14px] leading-[1.6] text-white/85">Viewport previews update as you drag a curve, even on large renders, so you judge the grade on the real image.</p>
-            <a href="#releases" class="lnk mt-4">Learn more <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <h3 class="mt-5 text-[18px]">Grade live, right in the viewport.</h3>
+            <p class="mt-4 ui text-[14px] leading-[1.6] text-muted">Every change shows up in the 3D viewport as you make it, so you judge the grade on the real image.</p>
+            <a href="#products" class="lnk mt-4">Learn more <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
           <article>
-            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8CC7FF] focus-visible:outline-offset-2" aria-label="Watch: the 2026 community showreel">
+            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#265787] focus-visible:outline-offset-2" aria-label="Watch: the 2026 community showreel">
               <img src="assets/render-dusk-office.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" style="filter: grayscale(.4) contrast(1.2)" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
               <span class="play absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></span>
             </a>
             <span class="mod mod-looks mt-7" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span>
-            <h3 class="mt-5 text-[15px] font-semibold leading-[1.45]">The 2026 community showreel is here.</h3>
-            <p class="mt-4 ui text-[14px] leading-[1.6] text-white/85">A year of finished work from the Lumina Community, from quiet interiors to full product campaigns.</p>
+            <h3 class="mt-5 text-[18px]">The 2026 community showreel is here.</h3>
+            <p class="mt-4 ui text-[14px] leading-[1.6] text-muted">A year of finished work from the Lumina Community, from quiet interiors to full product campaigns.</p>
             <a href="#gallery" class="lnk mt-4">Watch the showreel <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
           <article>
-            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8CC7FF] focus-visible:outline-offset-2" aria-label="Watch: LightMix walkthrough">
+            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#265787] focus-visible:outline-offset-2" aria-label="Read: what is coming next">
               <img src="assets/render-warehouse.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" style="object-position: 80% 50%; filter: brightness(.6) contrast(1.25) saturate(1.3)" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
-              <span class="play absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></span>
             </a>
-            <span class="mod mod-deliver mt-7" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h12"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></svg></span>
-            <h3 class="mt-5 text-[15px] font-semibold leading-[1.45]">LightMix now reads Cycles light groups.</h3>
-            <p class="mt-4 ui text-[14px] leading-[1.6] text-white/85">Set up light groups in Cycles and each one appears as a slider in Lumina, ready to rebalance after the render.</p>
-            <a href="#releases" class="lnk mt-4">Learn more <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <span class="mod mod-effects mt-7" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
+            <h3 class="mt-5 text-[18px]">Coming next: Blend Modes and LUT import.</h3>
+            <p class="mt-4 ui text-[14px] leading-[1.6] text-muted">Both are on the roadmap, not in Lumina yet. Tell us how you would use them and vote on what ships first.</p>
+            <a href="#community" class="lnk mt-4">See the roadmap <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
           <article>
-            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden bg-raised focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8CC7FF] focus-visible:outline-offset-2" aria-label="Read: delivery presets">
-              <img src="https://placehold.co/530x300/171C38/9AA5C0?text=Delivery+presets" alt="" class="absolute inset-0 w-full h-full object-cover" />
+            <a href="#releases" class="relative block aspect-[265/150] rounded-[12px] overflow-hidden bg-raised focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#265787] focus-visible:outline-offset-2" aria-label="Read: the non-destructive layer stack">
+              <img src="https://placehold.co/530x300/171C38/9AA5C0?text=Layer+stack" alt="" class="absolute inset-0 w-full h-full object-cover" />
             </a>
-            <span class="mod mod-masks mt-7" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></svg></span>
-            <h3 class="mt-5 text-[15px] font-semibold leading-[1.45]">Delivery presets for every client.</h3>
-            <p class="mt-4 ui text-[14px] leading-[1.6] text-white/85">Save the sizes, color spaces and file names a client expects, then export every shot in a project with one click.</p>
-            <a href="#releases" class="lnk mt-4">Learn more <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <span class="mod mod-layers mt-7" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></span>
+            <h3 class="mt-5 text-[18px]">Non-destructive by design.</h3>
+            <p class="mt-4 ui text-[14px] leading-[1.6] text-muted">Every layer can be toggled, reordered, grouped and saved, so no decision is final until you deliver.</p>
+            <a href="#products" class="lnk mt-4">Learn more <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="m3.5 2 3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
           </article>
         </div>
       </div>
@@ -712,12 +707,12 @@
     <section id="masterclass" class="bg-panel scroll-mt-4" aria-labelledby="mc-h">
       <div class="mx-auto max-w-[1220px] px-5 py-[78px] grid lg:grid-cols-[480px_1fr_auto] gap-10 items-center">
         <div class="flex items-center justify-center lg:justify-start gap-8 lg:border-r lg:border-line lg:pr-14 lg:h-[110px]">
-          <img src="https://placehold.co/380x380/1E2446/9AA5C0?text=Host" alt="Workshop host" width="190" height="190" class="w-[130px] h-[130px] md:w-[190px] md:h-[190px] rounded-full object-cover" />
+          <img src="https://placehold.co/380x380/262C4A/9AA5C0?text=Host" alt="Workshop host" width="190" height="190" class="w-[130px] h-[130px] md:w-[190px] md:h-[190px] rounded-full object-cover" />
           <img src="https://placehold.co/380x380/171C38/9AA5C0?text=Host" alt="Workshop host" width="190" height="190" class="w-[130px] h-[130px] md:w-[190px] md:h-[190px] rounded-full object-cover" />
         </div>
         <div class="max-w-[480px]">
-          <h2 id="mc-h" class="text-[22px] font-semibold leading-[1.3] tracking-[-0.02em]">Live workshop: finishing an arch-viz render, from raw to client.</h2>
-          <p class="mt-4 ui text-[15px] leading-[1.65] text-fg">Follow one exterior and one interior from the raw Cycles output to the final delivered image. Grade, build a look, mask the sky and glazing, rebalance the lights and export for the client.</p>
+          <h2 id="mc-h" class="text-[22px] sm:text-[26px]">Live workshop: finishing an arch-viz render, from raw to client.</h2>
+          <p class="mt-4 ui text-[15px] leading-[1.65] text-fg">Follow one exterior and one interior from the raw Cycles output to the final delivered image. Grade, build a Look, mask the sky and glazing, review and deliver to the client.</p>
           <p class="ui text-[15px] leading-[1.65]">A four-session <strong>live workshop</strong> taught by working arch-viz artists, with time for questions after every session.</p>
           <p class="mt-1 ui text-[15px] font-semibold">Next session: Oct 22, 2026, 4:00 PM CEST</p>
         </div>
@@ -726,18 +721,19 @@
     </section>
 
     <!-- ============ TRIAL ============ -->
-    <section id="pricing" class="on-dark relative bg-deep text-white overflow-hidden scroll-mt-4" aria-labelledby="trial-h">
-      <div class="absolute inset-0 pointer-events-none" aria-hidden="true" style="background: radial-gradient(40% 120% at 40% 0%, rgba(30,90,180,.55), transparent 70%)"></div>
+    <section id="pricing" class="on-dark relative bg-deep text-fg overflow-hidden scroll-mt-4" aria-labelledby="trial-h">
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true" style="background: radial-gradient(40% 120% at 40% 0%, rgba(38,87,135,.55), transparent 70%)"></div>
       <div class="relative mx-auto max-w-[880px] px-5 pt-9 pb-11 flex flex-col md:flex-row md:items-center justify-between gap-8">
         <div>
-          <h2 id="trial-h" class="text-[22px] font-semibold">Try Lumina free for 14 days.</h2>
-          <ul class="mt-3 space-y-0.5 ui text-[16px] list-[square] pl-6">
+          <h2 id="trial-h" class="text-[26px] sm:text-[32px]">From render to final image.</h2>
+          <p class="mt-1 ui text-[16px] text-muted">Try Lumina free for 14 days.</p>
+          <ul class="mt-4 space-y-1 ui text-[16px] list-[square] pl-6 marker:text-accent">
             <li>Every feature unlocked</li>
-            <li>Sample scenes and starter looks</li>
+            <li>Sample scenes and starter Looks</li>
             <li>Full community access</li>
           </ul>
         </div>
-        <a href="#pricing" class="btn btn-primary btn-lg !text-[15px] !h-[42px] !px-6 self-start md:self-center">Start your free trial</a>
+        <a href="#pricing" class="btn btn-primary btn-lg !px-6 self-start md:self-center">Download the free trial</a>
       </div>
     </section>
 
@@ -745,8 +741,8 @@
     <section id="contact" class="bg-card" aria-labelledby="nl-h">
       <div class="mx-auto max-w-frame px-5 pt-[42px] pb-9 grid lg:grid-cols-[1fr_462px] gap-10">
         <div>
-          <h2 id="nl-h" class="text-[22px] font-semibold tracking-[-0.02em]">Subscribe to the Lumina newsletter.</h2>
-          <p class="mt-4 ui text-[17px] leading-[1.6] max-w-[480px]">Release notes, new looks and finishing tips, sent about once a month.</p>
+          <h2 id="nl-h" class="text-[26px] sm:text-[32px]">Subscribe to the Lumina newsletter.</h2>
+          <p class="mt-4 ui text-[17px] leading-[1.6] max-w-[480px]">Release notes, new Looks and finishing tips, sent about once a month.</p>
         </div>
         <form class="ui" id="nl-form" novalidate>
           <label for="nl-email" class="block text-[13px] text-muted">Email*</label>
@@ -763,11 +759,11 @@
             <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[14px]">
               <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" class="check" checked /> Release notes</label>
               <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" class="check" /> Tutorials</label>
-              <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" class="check" /> Look packs</label>
+              <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" class="check" /> Look Packs</label>
             </div>
           </fieldset>
-          <p class="mt-3 text-[13px] text-muted">You can unsubscribe at any time. <a href="#legal" class="text-accent hover:text-accent-hover active:text-accent-press rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">Privacy policy</a>.</p>
-          <button type="submit" class="btn btn-outline btn-lg mt-4 !h-[44px] !px-10">Sign up</button>
+          <p class="mt-3 text-[13px] text-muted">You can unsubscribe at any time. <a href="#legal" class="text-accent-text underline decoration-accent underline-offset-2 hover:text-fg active:text-muted rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">Privacy policy</a>.</p>
+          <button type="submit" class="btn btn-outline btn-lg mt-4 !px-10">Sign up</button>
           <p id="nl-msg" class="mt-3 text-[13px] min-h-[1.2em]" role="status"></p>
         </form>
       </div>
@@ -784,7 +780,7 @@
         <div class="flex gap-2" aria-label="Lumina modules">
           <span class="mod mod-looks" title="Looks"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M3 15h18"/></svg></span>
           <span class="mod mod-grade" title="Grade"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 20C8 19 9 13 12 10s6-6 9-6"/></svg></span>
-          <span class="mod mod-deliver" title="LightMix"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h12"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></svg></span>
+          <span class="mod mod-effects" title="Effects"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
           <span class="mod mod-masks" title="Masks"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#fff"/></svg></span>
         </div>
       </div>
@@ -794,8 +790,8 @@
       <nav aria-label="Lumina"><h3 class="text-[13px] font-semibold">Lumina</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#">About us</a></li><li><a class="flink" href="#">Blog</a></li><li><a class="flink" href="#">Press</a></li><li><a class="flink" href="#">Careers</a></li><li><a class="flink" href="#contact">Contact us</a></li></ul></nav>
       <nav aria-label="Purchasing"><h3 class="text-[13px] font-semibold">Purchasing</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#pricing">Buy online</a></li><li><a class="flink" href="#">Studio licenses</a></li><li><a class="flink" href="#">Student pricing</a></li><li><a class="flink" href="#">Manage your license</a></li><li><a class="flink" href="#">Download Lumina</a></li><li><a class="flink" href="#">Refund policy</a></li></ul></nav>
       <nav aria-label="Support"><h3 class="text-[13px] font-semibold">Support</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#">Docs</a></li><li><a class="flink" href="#">Get support</a></li><li><a class="flink" href="#releases">Release notes</a></li><li><a class="flink" href="#">Forums</a></li></ul></nav>
-      <nav aria-label="Community"><h3 class="text-[13px] font-semibold">Community</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#gallery">Gallery</a></li><li><a class="flink" href="#community">Look packs</a></li><li><a class="flink" href="#masterclass">Workshops</a></li><li><a class="flink" href="#community">Roadmap</a></li></ul></nav>
-      <nav aria-label="Features"><h3 class="text-[13px] font-semibold">Features</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#products">Live grading</a></li><li><a class="flink" href="#products">Looks and film emulation</a></li><li><a class="flink" href="#releases">Masks and Cryptomatte</a></li><li><a class="flink" href="#products">LightMix</a></li><li><a class="flink" href="#products">Reference matching</a></li><li><a class="flink" href="#releases">Client delivery</a></li></ul></nav>
+      <nav aria-label="Community"><h3 class="text-[13px] font-semibold">Community</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#gallery">Gallery</a></li><li><a class="flink" href="#community">Look Packs</a></li><li><a class="flink" href="#masterclass">Workshops</a></li><li><a class="flink" href="#community">Roadmap</a></li></ul></nav>
+      <nav aria-label="Features"><h3 class="text-[13px] font-semibold">Features</h3><ul class="mt-6 space-y-[14px]"><li><a class="flink" href="#products">Live grading</a></li><li><a class="flink" href="#products">Looks and film emulation</a></li><li><a class="flink" href="#products">Masks</a></li><li><a class="flink" href="#products">Lens and artistic effects</a></li><li><a class="flink" href="#products">Layers and groups</a></li><li><a class="flink" href="#releases">Client delivery</a></li></ul></nav>
     </div>
 
     <div class="mx-auto max-w-frame px-5 pb-12">
@@ -810,8 +806,8 @@
 
     <div class="border-t border-line">
       <div class="mx-auto max-w-frame px-5 py-6 flex flex-col md:flex-row md:items-center justify-between gap-5">
-        <p class="text-[11px] leading-[1.6] text-muted max-w-[400px]">© 2026 Lumina. All rights reserved. Lumina is an independent add-on and is not affiliated with the Blender Foundation. Blender is a trademark of the Blender Foundation.</p>
-        <nav aria-label="Legal" class="flex flex-wrap gap-x-8 gap-y-2"><a class="flink !text-[11px]" href="#">Terms of use</a><a class="flink !text-[11px]" href="#">Privacy policy</a><a class="flink !text-[11px]" href="#">Legal</a><a class="flink !text-[11px]" href="#">Sitemap</a></nav>
+        <p class="text-[12px] leading-[1.6] text-muted max-w-[400px]">© 2026 Lumina. All rights reserved. Lumina is an independent add-on and is not affiliated with the Blender Foundation. Blender is a trademark of the Blender Foundation.</p>
+        <nav aria-label="Legal" class="flex flex-wrap gap-x-8 gap-y-2"><a class="flink !text-[12px]" href="#">Terms of use</a><a class="flink !text-[12px]" href="#">Privacy policy</a><a class="flink !text-[12px]" href="#">Legal</a><a class="flink !text-[12px]" href="#">Sitemap</a></nav>
       </div>
     </div>
   </footer>
@@ -820,7 +816,7 @@
   <div id="promo" class="promo on-dark fixed inset-x-0 bottom-0 z-50 bg-panel text-fg border-t border-line promo-pattern" role="region" aria-label="Student offer">
     <div class="mx-auto max-w-[760px] px-4 py-3 sm:h-[72px] sm:py-0 flex items-center justify-center gap-4 sm:gap-24 pr-14 sm:pr-4 bg-[linear-gradient(90deg,rgba(18,22,44,0),#12162C_10%,#12162C_90%,rgba(18,22,44,0))]">
       <p class="ui text-[13px] sm:text-[14px] leading-[1.4]"><strong class="font-semibold">Learning Blender at school?</strong><br class="hidden sm:block" /> Students get every Lumina feature at a lower price.</p>
-      <a href="#pricing" class="btn btn-outline-light !h-[36px] !px-6 shrink-0">See student pricing</a>
+      <a href="#pricing" class="btn btn-outline-light !px-6 shrink-0">See student pricing</a>
     </div>
     <button type="button" id="promo-close" class="icon-btn absolute right-3 sm:right-16 top-1/2 -translate-y-1/2 bg-fg hover:bg-white active:bg-[#D3DAE6] !w-8 !h-8" aria-label="Close student offer"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2 2 8 8M10 2l-8 8" stroke="#1c1c1c" stroke-width="1.8" stroke-linecap="round"/></svg></button>
   </div>
@@ -874,13 +870,13 @@
           img: 'assets/render-dusk-office.jpg', alt: 'Dusk render of an office facade, graded in Lumina', filter: 'contrast(1.12) saturate(1.2) brightness(.95)',
           a: 'All you need as an arch-viz artist', pills: ['Interiors','Exteriors','Dusk','Aerial','Stills'] },
         product: { line: 'product visualization.', color: '#9AA5C0', sub: 'Clean, consistent and on-brand.',
-          title: 'Keep every product shot consistent.', text: 'Mask the exact material you need to adjust, lock the brand colors and apply one look across the whole range. Change it once and every shot updates.',
+          title: 'Keep every product shot consistent.', text: 'Mask the part you need to adjust and save the finish as a Look. Apply the same Look across the whole range so every shot matches.',
           img: 'assets/render-warehouse.jpg', alt: 'Exterior render with a clean, neutral grade', filter: 'contrast(1.05) saturate(1.05) brightness(1.04)',
           a: 'All you need for product shots', pills: ['Packshots','Materials','Brand color','Turntables'] },
-        general: { line: 'generalists and small studios.', color: '#9AA5C0', sub: 'One look across every shot.',
-          title: 'Finish the work, skip the compositor.', text: 'Stills and short-form work that look finished without learning nodes. Share looks and masks across a team so every shot in a project matches.',
-          img: 'assets/render-dusk-office.jpg', alt: 'Dusk render with a filmic look applied', filter: 'sepia(.2) contrast(1.18) saturate(1.25) brightness(.92)',
-          a: 'All you need as a generalist', pills: ['Stills','Animation','Look packs','Teams'] },
+        general: { line: 'generalists and small studios.', color: '#9AA5C0', sub: 'One Look across every shot.',
+          title: 'Finish the work, skip the compositor.', text: 'Stills and short-form work that look finished without learning nodes. Save your Looks and reuse them across a project so every shot matches.',
+          img: 'assets/render-dusk-office.jpg', alt: 'Dusk render with a filmic Look applied', filter: 'sepia(.2) contrast(1.18) saturate(1.25) brightness(.92)',
+          a: 'All you need as a generalist', pills: ['Stills','Animation','Look Packs','Teams'] },
       };
       const tabs = [...document.querySelectorAll('.tab')];
       const $ = id => document.getElementById(id);
@@ -917,8 +913,8 @@
       // Quotes
       const quotes = [
         { q: '“I used to send renders out half-finished because I didn\'t want to open the compositor. Now the grade happens in the same window I lit the scene in.”', n: 'Artist name', r: 'Freelance arch-viz artist', l: 'A' },
-        { q: '“We keep one look pack per client. New shots go through the same layers, so the whole set matches without anyone babysitting it.”', n: 'Artist name', r: 'Lead artist, product studio', l: 'B' },
-        { q: '“Masking the glazing on its own used to be a whole evening. With Cryptomatte in Lumina it is one click and a curve.”', n: 'Artist name', r: 'Visualization generalist', l: 'C' },
+        { q: '“We keep one Look Pack per client. New shots go through the same layers, so the whole set matches without anyone babysitting it.”', n: 'Artist name', r: 'Lead artist, product studio', l: 'B' },
+        { q: '“Finishing used to mean exporting to another app. Now the render never leaves Blender, and every layer stays editable until I deliver.”', n: 'Artist name', r: 'Visualization generalist', l: 'C' },
       ];
       let qi = 0;
       const dots = [...document.querySelectorAll('.q-dot')];
@@ -937,7 +933,7 @@
         const email = $('nl-email'), ver = $('nl-ver'), msg = $('nl-msg');
         if (!email.value || !email.checkValidity()) { msg.textContent = 'Enter a valid email address, like name@studio.com.'; msg.style.color = '#FF8B73'; email.focus(); return; }
         if (!ver.value) { msg.textContent = 'Choose the Blender version you use.'; msg.style.color = '#FF8B73'; ver.focus(); return; }
-        msg.textContent = 'Subscribed. Check your inbox to confirm.'; msg.style.color = '#5AB0FF';
+        msg.textContent = 'Subscribed. Check your inbox to confirm.'; msg.style.color = '#F1F5F9';
       });
 
       // Promo bar
