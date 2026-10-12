@@ -128,11 +128,6 @@
     .split-range:focus-visible ~ .split-line .split-knob { outline: 2px solid var(--accent); outline-offset: 3px; }
     .hero-tag { position: absolute; z-index: 2; bottom: 40px; padding: 5px 12px; border-radius: 999px; font: 600 12px/1.2 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--fg); background: rgba(10,12,24,.7); backdrop-filter: blur(6px); pointer-events: none; }
 
-    /* Stats */
-    .stat-num { font-family: Archivo, sans-serif; font-weight: 700; font-size: 48px; letter-spacing: -0.03em; line-height: 1; color: var(--fg); }
-    .stat-num span { color: var(--accent-text); }
-    @media (max-width: 640px) { .stat-num { font-size: 30px; } }
-
     /* Tabs */
     .tabs { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--panel); box-shadow: var(--shadow-elevated); }
     @media (max-width: 640px) { .tab { padding: 0 14px !important; } }
@@ -294,17 +289,12 @@
       </div>
     </section>
 
-    <!-- ============ STATS ============ -->
+    <!-- ============ INTRO ============ -->
     <section class="bg-canvas" aria-labelledby="stats-h">
       <div class="mx-auto max-w-frame px-5 pt-[76px] text-center">
         <h2 id="stats-h" class="text-[30px] sm:text-[48px] font-bold tracking-[-0.02em] leading-[1.1] text-spec-coral">We hide the nodes, not Blender.</h2>
         <p class="mt-4 mx-auto max-w-[720px] ui text-[16px] sm:text-[18px] text-muted">Lumina turns Blender's powerful but technical compositor into a layer workflow artists can read: grade, stylize, mask, review and deliver, live in the 3D viewport.</p>
       </div>
-      <dl class="mx-auto max-w-[900px] px-5 mt-14 grid grid-cols-3">
-        <div class="text-center px-2"><dt class="sr-only">Nodes to wire</dt><dd class="stat-num">0<span></span></dd><p class="mt-3 text-[13px] sm:text-sm text-muted ui">nodes to wire by hand</p></div>
-        <div class="text-center px-2 border-x border-line"><dt class="sr-only">Steps</dt><dd class="stat-num">5<span></span></dd><p class="mt-3 text-[13px] sm:text-sm text-muted ui">steps from render to delivery</p></div>
-        <div class="text-center px-2"><dt class="sr-only">Non-destructive</dt><dd class="stat-num">100<span>%</span></dd><p class="mt-3 text-[13px] sm:text-sm text-muted ui">non-destructive, every layer</p></div>
-      </dl>
 
       <!-- Works-with strip -->
       <div class="mx-auto max-w-frame px-5 py-[72px]">
